@@ -119,6 +119,7 @@ namespace 養護学校アプリ
             return gen_Chars;
 
             //コメント!!!
+            //コメント追加!!
             
         }
 
