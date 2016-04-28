@@ -117,6 +117,7 @@ namespace 養護学校アプリ
                 gen_Chars[randomIndex] = temp;
             }
             return gen_Chars;
+            
         }
 
 
