@@ -22,18 +22,16 @@ namespace 養護学校アプリ
     {
         private int currentWordsCnt=0;
         private List<Button> questionList;
-
+        private string QuestionText = "んんん";
 
         public GamePage()
         {
             InitializeComponent();
-            string QuestionText = "んんん";
-            char[] questionArray = QuestionText.ToCharArray();
-            string dummys = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもられるれろやゆよわをん";
-            char[] dummysArray = dummys.ToCharArray();
+            
+            
             int ColumnNum=QuestionText.Length;
    
-            char[] dummyChars=dummy_gen(dummysArray,questionArray);
+            
             ColumnDefinition[] ColumnArray =new ColumnDefinition[ColumnNum];            
             QuestionFrame.ShowGridLines = true;
             for (int i=0; i < ColumnNum; i++)
@@ -56,6 +54,8 @@ namespace 養護学校アプリ
 
         public void shuffle()
         {
+
+            char[] dummyChars = dummy_gen();
             Random rnd = new Random();
             int buttoncnt = 7;
             int plusX = (int)((Canvas)dummyCanvas).Width / buttoncnt;
@@ -69,7 +69,7 @@ namespace 養護学校アプリ
                 btn.Name = "dummybtn" + buttoncnt;
 
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
-                btn.Content = "あ";
+                btn.Content = dummyChars[i];
                 dummyCanvas.Children.Add(btn);
                 btn.Width = 100;
                 btn.Height = 100;
@@ -81,23 +81,42 @@ namespace 養護学校アプリ
             }
         }
 
-        private char[] dummy_gen(char[] dummysArray,char[] question)
+        private char[] dummy_gen()
         {
-            char[] genStr;
+            char[] questionArray = QuestionText.ToCharArray();
+            string dummys = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもられるれろやゆよわをん";
+            char[] dummysArray = dummys.ToCharArray();
+           
             List<char> dummysList=new List<char>();
-
+            List<char> gen_chars = new List<char>();
+            
             foreach(char c in dummysArray){
                 dummysList.Add(c);
             }
-            foreach (char c in question)
+            foreach (char c in questionArray)
             {
                 dummysList.Remove(c);
+                gen_chars.Add(c);
             }
-
-            
-
-
-            return abcdefg;
+            Random rnd=new Random();
+            char[] dummyExtract = new char[7-QuestionText.Length];
+            for (int i=0; i < dummyExtract.Length; i++)
+            {
+                dummyExtract[i] = dummysList[rnd.Next(0,dummysList.Count-1)];
+            }
+            foreach (char c in dummyExtract)
+            {
+                gen_chars.Add(c);
+            }
+            char[] gen_Chars = gen_chars.ToArray();
+            for (int i = 0; i < gen_Chars.Length; i++)
+            {
+                char temp = gen_Chars[i];
+                int randomIndex = rnd.Next(0, gen_Chars.Length);
+                gen_Chars[i] = gen_Chars[randomIndex];
+                gen_Chars[randomIndex] = temp;
+            }
+            return gen_Chars;
         }
 
 
@@ -108,5 +127,7 @@ namespace 養護学校アプリ
 
             shuffle();
         }
+
+
     }
 }
