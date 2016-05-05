@@ -22,7 +22,7 @@ namespace 養護学校アプリ
     {
         private int currentWordsCnt=0;
         private List<Button> questionList;
-        private string QuestionText = "んんん";
+        private string QuestionText = "たけ";
 
         public GamePage()
         {
@@ -33,20 +33,22 @@ namespace 養護学校アプリ
    
             
             ColumnDefinition[] ColumnArray =new ColumnDefinition[ColumnNum];            
-            QuestionFrame.ShowGridLines = true;
+            //QuestionFrame.ShowGridLines = true;
             for (int i=0; i < ColumnNum; i++)
             {
                 ColumnArray[i] = new ColumnDefinition();
                 Button btn = new Button();
                 btn.FontSize = 400/ColumnNum;
                 btn.Content = QuestionText[i];
+                btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
+                btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
                 Grid.SetColumn(btn, i);
                 QuestionFrame.Children.Add(btn);                
             }
 
-            ((Button)QuestionFrame.Children[0]).Background = new SolidColorBrush(Colors.MediumSeaGreen);
+            ((Button)QuestionFrame.Children[0]).IsEnabled = false;
             shuffle();
             
 
@@ -66,6 +68,7 @@ namespace 養護学校アプリ
                 int btnX = 0;
                 btnX = rnd.Next(plusXresult - plusX, plusXresult - 100);
                 Button btn = new Button();
+                btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
 
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
@@ -73,7 +76,7 @@ namespace 養護学校アプリ
                 dummyCanvas.Children.Add(btn);
                 btn.Width = 100;
                 btn.Height = 100;
-
+                
 
                 ((Button)dummyCanvas.Children[i]).Margin = new Thickness(btnX, btnY, 0, 0);
                 plusXresult += plusX;
